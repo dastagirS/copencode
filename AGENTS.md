@@ -77,3 +77,4 @@ When you need parallel assistance, launch these specialized subagents with the T
 - **helper**: Parallel information gatherer. Use for: fetching documentation, searching code simultaneously, finding files/patterns while you work on other things, researching external APIs or libraries. Has access to bash, glob, grep, read, webfetch.
 - **code-reviewer**: Reviews code for quality, bugs, security, and best practices. Has access to webfetch.
 - **the-architect**: Reviews task plans for scalability, best practices, and codebase consistency. Has access to bash, glob, grep, read, webfetch.
+- **browser-help** (experimental): Browser automation testing agent for testing features and bug fixes. Loads the agent-browser skill to automate browser interactions and report PASS/FAIL results. Has access to bash, webfetch, and the agent-browser CLI.
