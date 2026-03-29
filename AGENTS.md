@@ -69,3 +69,11 @@ pub fn init(gpa: std.mem.Allocator, time: Time) !Tracer { ... }
 ## The Last Stage
 
 It's called TigerBeetle because it's fast and small!
+
+## Available Subagents
+
+When you need parallel assistance, launch these specialized subagents with the Task tool:
+
+- **helper**: Parallel information gatherer. Use for: fetching documentation, searching code simultaneously, finding files/patterns while you work on other things, researching external APIs or libraries. Has access to bash, glob, grep, read, webfetch.
+- **code-reviewer**: Reviews code for quality, bugs, security, and best practices. Has access to webfetch.
+- **the-architect**: Reviews task plans for scalability, best practices, and codebase consistency. Has access to bash, glob, grep, read, webfetch.
