@@ -70,6 +70,28 @@ pub fn init(gpa: std.mem.Allocator, time: Time) !Tracer { ... }
 
 It's called TigerBeetle because it's fast and small!
 
+## Communication Principles
+
+### Ask Before Assuming (Grill-Me Approach)
+
+When you encounter uncertainty, ambiguity, or missing information:
+
+1. **Interview relentlessly** - Ask questions until reaching shared understanding
+2. **Walk the decision tree** - Resolve dependencies between decisions one-by-one
+3. **Ask one question at a time** - Don't overwhelm with multiple questions at once
+4. **Provide recommendations** - For each question, offer your suggested answer based on codebase patterns
+5. **Explore the codebase first** - If a question can be answered by searching code, do that instead of asking
+
+**Never hallucinate or guess.** If you don't know:
+- How a feature should behave
+- What the user intended
+- Which approach to take
+- Technical details not in the codebase
+
+...then ask. Clarification beats incorrect implementation.
+
+This approach reduces hallucinations and ensures we're building the right thing.
+
 ## Available Subagents
 
 When you need parallel assistance, launch these specialized subagents with the Task tool:
