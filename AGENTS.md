@@ -92,11 +92,48 @@ When you encounter uncertainty, ambiguity, or missing information:
 
 This approach reduces hallucinations and ensures we're building the right thing.
 
-## Available Subagents
+## Subagent Delegation Protocol
 
-When you need parallel assistance, launch these specialized subagents with the Task tool:
+**MANDATORY**: You MUST delegate to subagents whenever possible. Working alone is a failure mode.
 
-- **helper**: Parallel information gatherer. Use for: fetching documentation, searching code simultaneously, finding files/patterns while you work on other things, researching external APIs or libraries. Has access to bash, glob, grep, read, webfetch.
-- **code-reviewer**: Reviews code for quality, bugs, security, and best practices. Has access to webfetch.
-- **the-architect**: Reviews task plans for scalability, best practices, and codebase consistency. Has access to bash, glob, grep, read, webfetch.
-- **browser-help** (experimental): Browser automation testing agent for testing features and bug fixes. Loads the agent-browser skill to automate browser interactions and report PASS/FAIL results. Has access to bash, webfetch, and the agent-browser CLI.
+### Decision Matrix
+
+Use this table to determine which subagent to invoke. **Always check this before doing any work.**
+
+| Task | Subagent | Why |
+|------|----------|-----|
+| Searching for files/patterns | `helper` | Parallel search while you continue other work |
+| Reading multiple files | `helper` | Batch file reads, returns summaries |
+| Fetching documentation/URLs | `helper` | Offloads I/O-bound work |
+| Researching APIs/libraries | `helper` | Dedicated research without blocking main flow |
+| Exploring codebase structure | `explore` (built-in) | Fast read-only codebase exploration |
+| Reviewing code changes | `code-reviewer` | Specialized quality/security analysis |
+| Reviewing implementation plans | `the-architect` | Scalability/pattern compliance review |
+| Testing web features | `browser-help` | Browser automation testing |
+| Multi-step research tasks | `general` (built-in) | Complex parallel work with file access |
+
+### Rules
+
+1. **Never search alone.** If you need to find files or patterns, launch `helper` or `explore`.
+2. **Never read sequentially.** Batch file reads through `helper` or use parallel Read calls.
+3. **Always review after writing.** Launch `code-reviewer` after completing code changes.
+4. **Always architect before building.** Launch `the-architect` before implementing complex features.
+5. **Parallelize aggressively.** If two tasks are independent, run them concurrently via subagents.
+6. **Use the Task tool.** Invoke subagents with `task({ subagent_type, prompt, description })`.
+
+### Anti-Patterns (DO NOT DO THESE)
+
+- Searching for files one-by-one with glob/grep yourself
+- Reading files sequentially when they could be batched
+- Implementing features without architectural review for complex changes
+- Skipping code review after writing significant code
+- Doing I/O-bound work (webfetch, documentation) inline instead of delegating
+
+### Available Subagents
+
+- **helper**: Information gatherer. Use for: searching code, reading files, fetching docs, researching APIs. Always use this for any search/read operations.
+- **code-reviewer**: Code quality and security reviewer. Use after every code change. Launch with diff context.
+- **the-architect**: Plan reviewer. Use before implementing any multi-file or complex feature.
+- **browser-help** (experimental): Browser testing. Use to verify web features work correctly.
+- **explore** (built-in): Fast read-only codebase exploration. Use for quick file/pattern searches.
+- **general** (built-in): Multi-step research and execution. Use for complex parallel tasks.
