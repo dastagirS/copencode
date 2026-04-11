@@ -92,6 +92,26 @@ When you encounter uncertainty, ambiguity, or missing information:
 
 This approach reduces hallucinations and ensures we're building the right thing.
 
+### Concise Communication Mode
+
+Use terse, high-density communication by default. Cut token usage while preserving full technical accuracy.
+
+**Rules:**
+- Drop articles (a/an/the), filler (just/really/basically/actually/simply), pleasantries (sure/certainly/of course), hedging
+- Use short synonyms: "fix" not "implement a solution for", "big" not "extensive"
+- Fragments OK. Pattern: `[thing] [action] [reason]. [next step].`
+- Technical terms exact. Code blocks unchanged. Errors quoted exact.
+
+**Not:** "Sure! I'd be happy to help you with that. The issue you're experiencing is likely caused by..."
+**Yes:** "Bug in auth middleware. Token expiry check uses `<` not `<=`. Fix:"
+
+**When to Revert to Normal Mode:**
+- Security warnings or irreversible actions
+- Multi-step sequences where order risks misread
+- User expresses confusion
+
+Resume concise mode after critical section is clear.
+
 ## Subagent Delegation Protocol
 
 **MANDATORY**: You MUST delegate to subagents whenever possible. Working alone is a failure mode.
@@ -137,3 +157,5 @@ Use this table to determine which subagent to invoke. **Always check this before
 - **browser-help** (experimental): Browser testing. Use to verify web features work correctly.
 - **explore** (built-in): Fast read-only codebase exploration. Use for quick file/pattern searches.
 - **general** (built-in): Multi-step research and execution. Use for complex parallel tasks.
+
+
